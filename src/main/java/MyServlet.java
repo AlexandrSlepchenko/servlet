@@ -62,18 +62,10 @@ public class MyServlet extends HttpServlet {
         } finally {
             reader.close();
         }
-//        System.out.println(sb.toString());
         String data = sb.toString();
 
         ObjectMapper mapper = new ObjectMapper();
         Item item = mapper.readValue(data, Item.class);
         return item;
     }
-
-
-    // GET                            READ
-    // POST    save some info in DB   CREATE
-    // PUT     update some info       UPDATE
-    // DELETE                         DELETE
-
 }
