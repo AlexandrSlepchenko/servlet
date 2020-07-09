@@ -53,19 +53,15 @@ public class MyServlet extends HttpServlet {
 
     private Item mapper(HttpServletRequest req)throws IOException {
         StringBuilder sb = new StringBuilder();
-        BufferedReader reader = req.getReader();
-        try {
+        try (BufferedReader reader = req.getReader()) {
             String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line).append('\n');
             }
-        } finally {
-            reader.close();
         }
         String data = sb.toString();
 
         ObjectMapper mapper = new ObjectMapper();
-        Item item = mapper.readValue(data, Item.class);
-        return item;
+        return mapper.readValue(data, Item.class);
     }
 }
