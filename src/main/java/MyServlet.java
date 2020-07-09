@@ -1,3 +1,4 @@
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -5,8 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.Map;
 
 @WebServlet(urlPatterns = "/test")
 public class MyServlet extends HttpServlet {
@@ -52,16 +53,7 @@ public class MyServlet extends HttpServlet {
     }
 
     private Item mapper(HttpServletRequest req)throws IOException {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader reader = req.getReader()) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line).append('\n');
-            }
-        }
-        String data = sb.toString();
-
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(data, Item.class);
+        return mapper.readValue(new BufferedReader((Reader) req), Item.class);
     }
 }
