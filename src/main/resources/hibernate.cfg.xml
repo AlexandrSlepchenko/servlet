@@ -11,7 +11,7 @@
         <property name="hibernate.connection.username">main</property>
         <property name="hibernate.connection.password">Utarasta287</property>
 
-        <mapping class="Item"></mapping>
+        <mapping class="Item"/>
 
     </session-factory>
 </hibernate-configuration>
