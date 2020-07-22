@@ -16,28 +16,26 @@ public class MyServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         try {
             resp.getWriter().println(itemService.findById(Long.valueOf(req.getParameter("id"))).toString());
-        }catch (Exception e){
+        } catch (Exception e) {
             resp.getWriter().println(e.getMessage());
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Item item = mapper(req);
-        try {
-            resp.getWriter().println(itemService.save(item));
-        } catch (Exception e) {
-            resp.getWriter().println(e.getMessage());
+        Item item;
+        try (BufferedReader br = req.getReader()) {
+            item = mapper(br);
+            itemService.save(item);
         }
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Item item = mapper(req);
-        try {
-            resp.getWriter().println(itemService.update(item));
-        } catch (Exception e) {
-            resp.getWriter().println(e.getMessage());
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Item item;
+        try (BufferedReader br = req.getReader()) {
+            item = mapper(br);
+            itemService.update(item);
         }
     }
 
@@ -50,8 +48,8 @@ public class MyServlet extends HttpServlet {
         }
     }
 
-    private Item mapper(HttpServletRequest req)throws IOException {
+    public Item mapper(BufferedReader br) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new BufferedReader((Reader) req), Item.class);
+        return mapper.readValue(br, Item.class);
     }
 }

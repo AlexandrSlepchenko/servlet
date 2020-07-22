@@ -25,21 +25,25 @@ public class Item {
     }
 
     @Column(name = "NAME")
+    @JsonProperty("name")
     public String getName() {
         return name;
     }
 
     @Column(name = "DATE_CREATED")
+    @JsonProperty("dateCreated")
     public Date getDateCreated() {
         return dateCreated;
     }
 
     @Column(name = "DATE_LAST_UPDATE")
+    @JsonProperty("lastUpdateDate")
     public Date getLastUpdateDate() {
         return lastUpdateDate;
     }
 
     @Column(name = "DESCRIPTION")
+    @JsonProperty("description")
     public String getDescription() {
         return description;
     }
